@@ -1,4 +1,5 @@
 import type { AWS } from '@serverless/typescript';
+import { authRoutes } from 'src/routes/auth.routes';
 import { helloRoutes } from 'src/routes/hello.routes';
 
 const serverlessConfiguration: AWS = {
@@ -18,7 +19,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { ...helloRoutes },
+  functions: { ...helloRoutes, ...authRoutes },
   package: { individually: true },
   custom: {
     esbuild: {
