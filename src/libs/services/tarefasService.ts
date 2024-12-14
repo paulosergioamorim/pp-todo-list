@@ -1,19 +1,19 @@
-import { db } from "@libs/firebase";
-import { CriarTarefa, Tarefa } from "@libs/models/Tarefa";
+import { db } from '@libs/firebase'
+import { CriarTarefa, Tarefa } from '@libs/models/Tarefa'
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import { Categoria } from "src/enums/Categoria";
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    QueryDocumentSnapshot,
+    QuerySnapshot,
+    setDoc,
+    where,
+} from 'firebase/firestore'
+import { Categoria } from 'src/enums/Categoria'
 
 /**
  * Converte o tipo de documento do Firebase para o tipo do Typescript
@@ -21,7 +21,7 @@ import { Categoria } from "src/enums/Categoria";
  * @returns tareja já convertida
  */
 function parseDocumentDataToObject(doc: QueryDocumentSnapshot): Tarefa {
-  return { id: doc.id, ...doc.data() } as Tarefa;
+    return { id: doc.id, ...doc.data() } as Tarefa
 }
 
 /**
@@ -30,7 +30,7 @@ function parseDocumentDataToObject(doc: QueryDocumentSnapshot): Tarefa {
  * @returns array de objetos convertidos
  */
 function parseQuerySnapshotToArray(snapshot: QuerySnapshot): Tarefa[] {
-  return snapshot.docs.map(parseDocumentDataToObject);
+    return snapshot.docs.map(parseDocumentDataToObject)
 }
 
 /**
@@ -39,10 +39,10 @@ function parseQuerySnapshotToArray(snapshot: QuerySnapshot): Tarefa[] {
  * @returns lista de tarefas
  */
 export async function getTarefasByEmail(email: string) {
-  console.log("-> LOG: getTarefasByEmail\n");
-  const snapshot = await getDocs(collection(db, "usuarios", email, "tarefas"));
+    console.log('-> LOG: getTarefasByEmail\n')
+    const snapshot = await getDocs(collection(db, 'usuarios', email, 'tarefas'))
 
-  return parseQuerySnapshotToArray(snapshot);
+    return parseQuerySnapshotToArray(snapshot)
 }
 
 /**
@@ -52,18 +52,18 @@ export async function getTarefasByEmail(email: string) {
  * @returns lista de tarefas
  */
 export async function getTarefasByCategoria(
-  email: string,
-  categoria: Categoria
+    email: string,
+    categoria: Categoria
 ) {
-  console.log("-> LOG: getTarefasByCategoria\n");
-  const snapshot = await getDocs(
-    query(
-      collection(db, "usuarios", email, "tarefas"),
-      where("categoria", "==", categoria)
+    console.log('-> LOG: getTarefasByCategoria\n')
+    const snapshot = await getDocs(
+        query(
+            collection(db, 'usuarios', email, 'tarefas'),
+            where('categoria', '==', categoria)
+        )
     )
-  );
 
-  return parseQuerySnapshotToArray(snapshot);
+    return parseQuerySnapshotToArray(snapshot)
 }
 
 /**
@@ -74,32 +74,32 @@ export async function getTarefasByCategoria(
  * @returns lista de tarefas
  */
 export async function getTarefasByTextMatching(
-  email: string,
-  searchText: string
+    email: string,
+    searchText: string
 ) {
-  console.log("-> LOG: getTarefasByTextMatching\n");
-  const searchNomeSnapshot = await getDocs(
-    query(
-      collection(db, "usuarios", email, "tarefas"),
-      where("nome", ">=", searchText),
-      where("nome", "<=", searchText + "\uf8ff")
+    console.log('-> LOG: getTarefasByTextMatching\n')
+    const searchNomeSnapshot = await getDocs(
+        query(
+            collection(db, 'usuarios', email, 'tarefas'),
+            where('nome', '>=', searchText),
+            where('nome', '<=', searchText + '\uf8ff')
+        )
     )
-  );
 
-  const searchDescricaoSnapshot = await getDocs(
-    query(
-      collection(db, "usuarios", email, "tarefas"),
-      where("descricao", ">=", searchText),
-      where("descricao", "<=", searchText + "\uf8ff")
+    const searchDescricaoSnapshot = await getDocs(
+        query(
+            collection(db, 'usuarios', email, 'tarefas'),
+            where('descricao', '>=', searchText),
+            where('descricao', '<=', searchText + '\uf8ff')
+        )
     )
-  );
 
-  const tarefas = {
-    ...parseQuerySnapshotToArray(searchNomeSnapshot),
-    ...parseQuerySnapshotToArray(searchDescricaoSnapshot),
-  };
+    const tarefas = {
+        ...parseQuerySnapshotToArray(searchNomeSnapshot),
+        ...parseQuerySnapshotToArray(searchDescricaoSnapshot),
+    }
 
-  return tarefas;
+    return tarefas
 }
 
 /**
@@ -109,12 +109,12 @@ export async function getTarefasByTextMatching(
  * @returns tarefa encontrada
  */
 export async function getTarefaById(email: string, id: string) {
-  console.log("-> LOG: getTarefaById\n");
-  const snapshot = await getDoc(doc(db, "usuarios", email, "tarefas", id));
+    console.log('-> LOG: getTarefaById\n')
+    const snapshot = await getDoc(doc(db, 'usuarios', email, 'tarefas', id))
 
-  if (!snapshot.exists()) return null;
+    if (!snapshot.exists()) return null
 
-  return parseDocumentDataToObject(snapshot);
+    return parseDocumentDataToObject(snapshot)
 }
 
 /**
@@ -123,11 +123,11 @@ export async function getTarefaById(email: string, id: string) {
  * @param tarefa tarefa a ser criada
  */
 export async function createTarefa(email: string, tarefa: CriarTarefa) {
-  console.log("-> LOG: createTarefa\n");
-  await addDoc(collection(db, "usuarios", email, "tarefas"), {
-    ...tarefa,
-    concluido: false,
-  });
+    console.log('-> LOG: createTarefa\n')
+    await addDoc(collection(db, 'usuarios', email, 'tarefas'), {
+        ...tarefa,
+        concluido: false,
+    })
 }
 
 /**
@@ -137,18 +137,18 @@ export async function createTarefa(email: string, tarefa: CriarTarefa) {
  * @param fieldsToUpdate campos (não obrigatórios) a serem atualizados
  */
 export async function updateTarefa(
-  email: string,
-  id: string,
-  fieldsToUpdate: Partial<CriarTarefa>
+    email: string,
+    id: string,
+    fieldsToUpdate: Partial<CriarTarefa>
 ) {
-  console.log("-> LOG: updateTarefa\n");
-  let { id: _, ...existingTarefa } = await getTarefaById(email, id);
+    console.log('-> LOG: updateTarefa\n')
+    let { id: _, ...existingTarefa } = await getTarefaById(email, id)
 
-  if (!existingTarefa) return;
+    if (!existingTarefa) return
 
-  existingTarefa = { ...existingTarefa, ...fieldsToUpdate };
+    existingTarefa = { ...existingTarefa, ...fieldsToUpdate }
 
-  await setDoc(doc(db, "usuarios", email, "tarefas", id), existingTarefa);
+    await setDoc(doc(db, 'usuarios', email, 'tarefas', id), existingTarefa)
 }
 
 /**
@@ -158,12 +158,12 @@ export async function updateTarefa(
  * @param id id da tarefa
  */
 export async function changeStateTarefa(email: string, id: string) {
-  console.log("-> LOG: changeStateTarefa\n");
-  const { id: _, ...existingTarefa } = await getTarefaById(email, id);
+    console.log('-> LOG: changeStateTarefa\n')
+    const { id: _, ...existingTarefa } = await getTarefaById(email, id)
 
-  existingTarefa.concluido = !existingTarefa.concluido;
+    existingTarefa.concluido = !existingTarefa.concluido
 
-  await updateTarefa(email, id, existingTarefa);
+    await updateTarefa(email, id, existingTarefa)
 }
 
 /**
@@ -172,6 +172,6 @@ export async function changeStateTarefa(email: string, id: string) {
  * @param id id da tarefa
  */
 export async function deleteTarefaById(email: string, id: string) {
-  console.log("-> LOG: deleteTarefaById\n");
-  await deleteDoc(doc(db, "usuarios", email, "tarefas", id));
+    console.log('-> LOG: deleteTarefaById\n')
+    await deleteDoc(doc(db, 'usuarios', email, 'tarefas', id))
 }

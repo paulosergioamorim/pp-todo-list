@@ -1,6 +1,6 @@
 export enum Categoria {
-  ESCOLA = "escola",
-  TRABALHO = "trabalho",
-  CASA = "casa",
-  LAZER = "lazer",
+    ESCOLA = 'escola',
+    TRABALHO = 'trabalho',
+    CASA = 'casa',
+    LAZER = 'lazer',
 }
