@@ -1,22 +1,22 @@
-import { createUser } from "@libs/services/authService";
+import { login } from "@libs/services/authService";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { Handler } from "src/errors/Handler";
-import { appError, ok } from "src/utils/Returns";
+import { appError, notFound, ok } from "src/utils/Returns";
 
-const registrarHandle = async (
+async function logar(
   event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
+): Promise<APIGatewayProxyResult> {
   try {
     const { email, senha } = JSON.parse(event.body) as Record<string, string>;
 
-    const token = await createUser(email, senha);
+    const token = await login(email, senha);
 
-    if (!token) return ok("mensagem", "Não foi possível se cadastrar");
+    if (!token) return notFound("Não foi possível realizar login");
 
     return ok("mensagem", "Sucesso!", { "firebase-auth-token": token });
   } catch (error) {
     return appError(error);
   }
-};
+}
 
-export const handler = Handler(registrarHandle);
+export const handler = Handler(logar);
