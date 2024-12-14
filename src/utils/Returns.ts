@@ -9,7 +9,7 @@ import { HttpStatusCode } from "src/enums/HttpStatusCode";
 // Import all extensions
 import "./extensions/array";
 
-const headers = {
+const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
   "Access-Control-Allow-Methods": "*",
@@ -17,12 +17,13 @@ const headers = {
 
 export const ok = (
   dataName: string,
-  data: unknown
+  data: unknown,
+  headers?: Record<string, string | number | boolean>
 ): APIGatewayProxyResult => {
   return {
     statusCode: HttpStatusCode.OK,
     body: JSON.stringify({ [dataName]: data }),
-    headers,
+    headers: { ...defaultHeaders, ...headers },
   };
 };
 
@@ -30,7 +31,7 @@ export const noContent = (): APIGatewayProxyResult => {
   return {
     statusCode: HttpStatusCode.NO_CONTENT,
     body: "",
-    headers,
+    headers: defaultHeaders,
   };
 };
 
@@ -41,7 +42,7 @@ export const created = (
   return {
     statusCode: HttpStatusCode.CREATED,
     body: JSON.stringify({ [dataName]: data }),
-    headers,
+    headers: defaultHeaders,
   };
 };
 
@@ -51,7 +52,7 @@ export const appError = (appError: AppError): APIGatewayProxyResult => ({
     type: appError.name,
     message: appError.message,
   }),
-  headers,
+  headers: defaultHeaders,
 });
 
 /**
@@ -66,7 +67,7 @@ export const errorMessage = (
   return {
     statusCode,
     body: JSON.stringify({ [dataName]: data }),
-    headers,
+    headers: defaultHeaders,
   };
 };
 
