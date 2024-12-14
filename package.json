@@ -13,6 +13,7 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
+    "firebase": "^11.1.0",
     "firebase-admin": "^13.0.1"
   },
   "devDependencies": {
