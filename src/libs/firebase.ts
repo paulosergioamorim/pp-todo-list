@@ -1,13 +1,16 @@
-import { App, ServiceAccount, initializeApp, cert } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
-
-const serviceAccount = require("../../serviceAccountKey.json");
+import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const app = initializeApp({
-  credential: cert(serviceAccount as ServiceAccount),
-}) as App;
-
-export const db = getFirestore(app);
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+});
 
 export const auth = getAuth(app);
+
+export const db = getFirestore(app);
