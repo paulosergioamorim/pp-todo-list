@@ -1,10 +1,10 @@
-export const authRoutes = {
-    registrar: {
-        handler: 'src/functions/auth/registrar.handler',
+export const tarefasRoutes = {
+    listar: {
+        handler: 'src/functions/tarefas/index.handler',
         events: [
             {
                 http: {
-                    path: 'auth/registrar',
+                    path: 'tarefas',
                     method: 'post',
                     cors: false,
                     // authorizer: {
@@ -14,12 +14,12 @@ export const authRoutes = {
             },
         ],
     },
-    logar: {
-        handler: 'src/functions/auth/logar.handler',
+    criar: {
+        handler: 'src/functions/tarefas/criar.handler',
         events: [
             {
                 http: {
-                    path: 'auth/logar',
+                    path: 'tarefas/criar',
                     method: 'post',
                     cors: false,
                     // authorizer: {

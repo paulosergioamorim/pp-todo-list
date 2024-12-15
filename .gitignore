@@ -18,5 +18,5 @@ jspm_packages
 !.yarn/sdks
 !.yarn/versions
 
-#firebase
-serviceAccountKey.json
+# secrets
+.env*

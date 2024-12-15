@@ -2,15 +2,15 @@
  * Base application error.
  */
 class AppError extends Error {
-  public readonly statusCode: number;
+    public readonly statusCode: number
 
-  constructor(message: string, statusCode: number) {
-    super(message);
+    constructor(message: string, statusCode: number) {
+        super(message)
 
-    this.name = "AppError";
+        this.name = 'AppError'
 
-    this.statusCode = statusCode;
-  }
+        this.statusCode = statusCode
+    }
 }
 
-export default AppError;
+export default AppError

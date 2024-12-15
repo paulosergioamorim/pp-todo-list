@@ -12,5 +12,4 @@ export enum HttpStatusCode {
     INTERNAL_ERROR = 500,
     NOT_IMPLEMENTED = 501,
     BAD_GATEWAY = 502,
-  }
-  
+}
