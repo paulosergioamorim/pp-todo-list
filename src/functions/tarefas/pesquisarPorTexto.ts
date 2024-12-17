@@ -1,17 +1,24 @@
 import { getTarefasByTextMatching } from '@libs/services/tarefasService'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { ok, badRequest } from 'src/utils/Returns'
+import { ok, badRequest, forbidden } from 'src/utils/Returns'
 import { Handler } from 'src/errors/Handler'
+import { getUserByToken } from '@libs/services/authService'
 
 const pesquisarPorTexto: APIGatewayProxyHandler = async (event) => {
+    const token = event.headers['Authorization']
+
     try {
-        const { email, searchText } = JSON.parse(event.body) //pega o email e a palavra-chave
+        if (!token) return forbidden('Não autorizado.')
 
-        if (!email || !searchText) {
-            return badRequest('O email e o texto de busca são obrigatórios!') //erro caso email ou palavra-chave n sejam disponibilizados
-        }
+        const user = await getUserByToken(token)
 
-        const tarefas = await getTarefasByTextMatching(email, searchText) //chama a funcao
+        const { searchText } = Object.fromEntries(
+            new URLSearchParams(event.queryStringParameters)
+        )
+
+        if (!searchText) return badRequest('O texto de busca é obrigatório!') //erro caso palavra-chave não seja disponibilizada
+
+        const tarefas = await getTarefasByTextMatching(user.email, searchText) //chama a funcao
 
         return ok('tarefas', tarefas) //tudo certo
     } catch (error) {
