@@ -14,6 +14,21 @@ export const tarefasRoutes = {
             },
         ],
     },
+    listarByCategoria: {
+        handler: 'src/functions/tarefas/tarefasByCategoria.handler',
+        events: [
+            {
+                http: {
+                    path: 'tarefasByCategoria',
+                    method: 'post',
+                    cors: false,
+                    // authorizer: {
+                    //   name: "authenticate",
+                    // },
+                },
+            },
+        ],
+    },
     criar: {
         handler: 'src/functions/tarefas/criar.handler',
         events: [
@@ -36,6 +51,18 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/atualizar/{id}',
                     method: 'put',
+                    cors: false,
+                },
+            },
+        ],
+    },
+    alteraEstado: {
+        handler: 'src/functions/tarefas/alteraEstado.handler',
+        events: [
+            {
+                http: {
+                    path: 'tarefas/alteraEstado',
+                    method: 'patch',
                     cors: false,
                     // authorizer: {
                     //   name: "authenticate",
@@ -65,6 +92,18 @@ export const tarefasRoutes = {
             {
                 http: {
                     path: 'tarefas/pesquisarPorTexto',
+                    method: 'post',
+                    cors: false,
+                },
+            },
+        ],
+    },
+    relatorioTarefas: {
+        handler: 'src/functions/tarefas/relatorioTarefas.handler',
+        events: [
+            {
+                http: {
+                    path: 'tarefas/relatorioTarefas',
                     method: 'post',
                     cors: false,
                     // authorizer: {
