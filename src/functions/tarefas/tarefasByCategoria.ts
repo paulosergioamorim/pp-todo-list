@@ -5,6 +5,7 @@ import {
     APIGatewayProxyResult,
     APIGatewayProxyHandler,
 } from 'aws-lambda'
+import { Categoria } from 'src/enums/Categoria'
 import { Handler } from 'src/errors/Handler'
 import { appError, forbidden, ok } from 'src/utils/Returns'
 
@@ -16,10 +17,15 @@ const tarefasByCategoria: APIGatewayProxyHandler = async (
     try {
         if (!token) return forbidden('Não autorizado.')
 
-        const { categoria } = JSON.parse(event.body)
+        const { categoria } = Object.fromEntries(
+            new URLSearchParams(event.queryStringParameters)
+        )
 
         const user = await getUserByToken(token)
-        const tarefas = await getTarefasByCategoria(user.email, categoria)
+        const tarefas = await getTarefasByCategoria(
+            user.email,
+            categoria as Categoria
+        )
 
         return ok('tarefas', tarefas)
     } catch (error) {

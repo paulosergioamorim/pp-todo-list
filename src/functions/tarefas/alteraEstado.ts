@@ -14,7 +14,7 @@ const alteraEstado: APIGatewayProxyHandler = async (
     const token = event.headers['Authorization']
 
     try {
-        const { id } = JSON.parse(event.body)
+        const { id } = JSON.parse(event.body) as Record<string, string>
         const user = await getUserByToken(token)
 
         if (!user || !id) {
@@ -23,7 +23,7 @@ const alteraEstado: APIGatewayProxyHandler = async (
 
         await changeStateTarefa(user.email, id)
 
-        return ok('Tarefa atualizada com sucesso!', { id })
+        return ok('mensagem', 'Tarefa atualizada com sucesso!')
     } catch (error) {
         return appError(error)
     }
