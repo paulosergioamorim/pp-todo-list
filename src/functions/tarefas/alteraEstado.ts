@@ -1,19 +1,23 @@
+import { getUserByToken } from '@libs/services/authService';
 import { changeStateTarefa } from '@libs/services/tarefasService';
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda';
 import { Handler } from 'src/errors/Handler';
 import { appError, ok } from 'src/utils/Returns';
 
-const alteraEstado = async (
+const alteraEstado: APIGatewayProxyHandler = async (
     event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-    try {
-        const { email, id } = JSON.parse(event.body);
+    const token = event.headers['firebase-auth-token']
 
-        if (!email || !id ) {
+    try {
+        const { id } = JSON.parse(event.body);
+        const user = await getUserByToken(token)
+
+        if (!user || !id ) {
             throw new Error("Parâmetros inválidos: 'email' e 'id' são obrigatórios.");
         }
 
-        await changeStateTarefa(email, id);
+        await changeStateTarefa(user.email, id);
 
         return ok('Tarefa atualizada com sucesso!', { id });
 
