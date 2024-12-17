@@ -16,7 +16,7 @@ const registrarHandle = async (
 
         if (!token) return ok('mensagem', 'Não foi possível se cadastrar')
 
-        return ok('mensagem', 'Sucesso!', { 'Authorization': token })
+        return ok('mensagem', 'Sucesso!', { Authorization: token })
     } catch (error) {
         return appError(error)
     }

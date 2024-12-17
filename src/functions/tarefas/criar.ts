@@ -9,7 +9,7 @@ const criarTarefa: APIGatewayProxyHandler = async (event) => {
     const token = event.headers['Authorization']
 
     try {
-        if (!token) return forbidden("Não autorizado.");
+        if (!token) return forbidden('Não autorizado.')
 
         const user = await getUserByToken(token)
         const tarefa = JSON.parse(event.body) as CriarTarefa

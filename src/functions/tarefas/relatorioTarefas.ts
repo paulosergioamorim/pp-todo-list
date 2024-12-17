@@ -8,30 +8,30 @@ const relatorioTarefas: APIGatewayProxyHandler = async (event) => {
     const token = event.headers['Authorization']
 
     try {
-        let totalTarefas = 0;
-        let concluidas = 0;
-        const categorias: Record<string, number> = {};
+        let totalTarefas = 0
+        let concluidas = 0
+        const categorias: Record<string, number> = {}
 
-        if (!token) return forbidden("Não autorizado.");
+        if (!token) return forbidden('Não autorizado.')
 
         const user = await getUserByToken(token)
         const tarefas = await getTarefasByEmail(user.email)
 
         for (const t of tarefas) {
-            totalTarefas++;
-            if (t.concluido) concluidas++;
+            totalTarefas++
+            if (t.concluido) concluidas++
             if (t.categoria) {
-                categorias[t.categoria] = (categorias[t.categoria] || 0) + 1;
+                categorias[t.categoria] = (categorias[t.categoria] || 0) + 1
             }
         }
 
         const relatorio = {
             total: totalTarefas,
             concluidas: concluidas,
-            categorias: categorias
-        };
+            categorias: categorias,
+        }
 
-        return ok('relatorio', relatorio);
+        return ok('relatorio', relatorio)
     } catch (error) {
         return appError(error)
     }
