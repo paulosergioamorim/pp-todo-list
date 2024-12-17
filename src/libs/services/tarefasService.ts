@@ -144,11 +144,13 @@ export async function updateTarefa(
     console.log('-> LOG: updateTarefa\n')
     let { id: _, ...existingTarefa } = await getTarefaById(email, id)
 
-    if (!existingTarefa) return
+    if (!existingTarefa) return false
 
     existingTarefa = { ...existingTarefa, ...fieldsToUpdate }
 
     await setDoc(doc(db, 'usuarios', email, 'tarefas', id), existingTarefa)
+
+    return true
 }
 
 /**

@@ -15,7 +15,9 @@
         "@middy/core": "^3.4.0",
         "@middy/http-json-body-parser": "^3.4.0",
         "firebase": "^11.1.0",
-        "firebase-admin": "^13.0.1"
+        "firebase-admin": "^13.0.1",
+        "glob": "^11.0.0",
+        "inflight": "^1.0.6"
     },
     "devDependencies": {
         "@serverless/typescript": "^3.0.0",
