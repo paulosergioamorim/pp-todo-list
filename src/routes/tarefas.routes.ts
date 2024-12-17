@@ -5,11 +5,7 @@ export const tarefasRoutes = {
             {
                 http: {
                     path: 'tarefas',
-                    method: 'post',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
+                    method: 'get',
                 },
             },
         ],
@@ -20,11 +16,7 @@ export const tarefasRoutes = {
             {
                 http: {
                     path: 'tarefasByCategoria',
-                    method: 'post',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
+                    method: 'get',
                 },
             },
         ],
@@ -36,10 +28,6 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/criar',
                     method: 'post',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
                 },
             },
         ],
@@ -51,7 +39,6 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/atualizar/{id}',
                     method: 'put',
-                    cors: false,
                 },
             },
         ],
@@ -63,10 +50,6 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/alteraEstado',
                     method: 'patch',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
                 },
             },
         ],
@@ -78,10 +61,6 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/deletar',
                     method: 'delete',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
                 },
             },
         ],
@@ -92,8 +71,7 @@ export const tarefasRoutes = {
             {
                 http: {
                     path: 'tarefas/pesquisarPorTexto',
-                    method: 'post',
-                    cors: false,
+                    method: 'get',
                 },
             },
         ],
@@ -104,11 +82,7 @@ export const tarefasRoutes = {
             {
                 http: {
                     path: 'tarefas/relatorioTarefas',
-                    method: 'post',
-                    cors: false,
-                    // authorizer: {
-                    //   name: "authenticate",
-                    // },
+                    method: 'get',
                 },
             },
         ],
