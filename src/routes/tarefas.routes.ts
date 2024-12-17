@@ -37,7 +37,7 @@ export const tarefasRoutes = {
         events: [
             {
                 http: {
-                    path: 'tarefas/atualizar/{id}',
+                    path: 'tarefas/atualizar',
                     method: 'put',
                 },
             },
