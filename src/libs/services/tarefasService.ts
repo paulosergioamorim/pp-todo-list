@@ -94,10 +94,10 @@ export async function getTarefasByTextMatching(
         )
     )
 
-    const tarefas = {
+    const tarefas = [
         ...parseQuerySnapshotToArray(searchNomeSnapshot),
         ...parseQuerySnapshotToArray(searchDescricaoSnapshot),
-    }
+    ]
 
     return tarefas
 }
