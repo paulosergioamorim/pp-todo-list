@@ -22,7 +22,7 @@ const pesquisarPorTexto: APIGatewayProxyHandler = async (event) => {
 
         return ok('tarefas', tarefas) //tudo certo
     } catch (error) {
-        return badRequest('Erro ao buscar tarefas!') //erro do cliente
+        return appError(error) //erro do servidor
     }
 }
 
