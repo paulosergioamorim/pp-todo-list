@@ -6,8 +6,13 @@ import { CriarTarefa } from '@libs/models/Tarefa'
 
 const atualizarTarefa: APIGatewayProxyHandler = async (event) => {
     try {
-        const { email, id, fieldsToUpdate }: { email: string; id: string; fieldsToUpdate: Partial<CriarTarefa> } = JSON.parse(event.body) // pega o email, id e oq vai atualizar no body
-        
+        const {
+            email,
+            id,
+            fieldsToUpdate,
+        }: { email: string; id: string; fieldsToUpdate: Partial<CriarTarefa> } =
+            JSON.parse(event.body) // pega o email, id e oq vai atualizar no body
+
         const tarefaAtualizada = await updateTarefa(email, id, fieldsToUpdate) //atualiza a tarefa
 
         if (!tarefaAtualizada) {
@@ -15,7 +20,6 @@ const atualizarTarefa: APIGatewayProxyHandler = async (event) => {
         }
 
         return ok('mensagem', 'Tarefa atualizada com sucesso!') //atualizada
-
     } catch (error) {
         return appError(error) //erro de busca
     }

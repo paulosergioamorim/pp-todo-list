@@ -16,7 +16,7 @@ async function logar(
 
         if (!token) return notFound('Não foi possível realizar login')
 
-        return ok('mensagem', 'Sucesso!', { 'firebase-auth-token': token })
+        return ok('mensagem', 'Sucesso!', { Authorization: token })
     } catch (error) {
         return appError(error)
     }
