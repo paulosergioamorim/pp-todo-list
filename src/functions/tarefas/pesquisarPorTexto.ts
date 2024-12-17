@@ -1,6 +1,6 @@
 import { getTarefasByTextMatching } from '@libs/services/tarefasService'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { ok, badRequest, forbidden } from 'src/utils/Returns'
+import { ok, badRequest, forbidden, appError } from 'src/utils/Returns'
 import { Handler } from 'src/errors/Handler'
 import { getUserByToken } from '@libs/services/authService'
 
@@ -22,7 +22,7 @@ const pesquisarPorTexto: APIGatewayProxyHandler = async (event) => {
 
         return ok('tarefas', tarefas) //tudo certo
     } catch (error) {
-        return badRequest('Erro ao buscar tarefas!') //erro do cliente
+        return appError(error) //erro do servidor
     }
 }
 
