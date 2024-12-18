@@ -10,17 +10,6 @@ export const tarefasRoutes = {
             },
         ],
     },
-    listarByCategoria: {
-        handler: 'src/functions/tarefas/tarefasByCategoria.handler',
-        events: [
-            {
-                http: {
-                    path: 'tarefasByCategoria',
-                    method: 'get',
-                },
-            },
-        ],
-    },
     criar: {
         handler: 'src/functions/tarefas/criar.handler',
         events: [
@@ -61,17 +50,6 @@ export const tarefasRoutes = {
                 http: {
                     path: 'tarefas/deletar',
                     method: 'delete',
-                },
-            },
-        ],
-    },
-    pesquisarPorTexto: {
-        handler: 'src/functions/tarefas/pesquisarPorTexto.handler',
-        events: [
-            {
-                http: {
-                    path: 'tarefas/pesquisarPorTexto',
-                    method: 'get',
                 },
             },
         ],
